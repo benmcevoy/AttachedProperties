@@ -7,18 +7,17 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("AugmentTests")]
 public sealed class Augment
 {
-    internal static readonly Dictionary<A, object> State = new Dictionary<A, object>();
+    internal static Dictionary<A, object> State = new Dictionary<A, object>();
 
     // ReSharper disable once ObjectCreationAsStatement
     private Augment() => new GCMonitor();
     public static Augment Instance = new Augment();
 
-    private static void Compact()
+    internal static void Compact()
     {
-        foreach (var stateKey in State.Keys.Where(stateKey => !stateKey.Owner.IsAlive))
-        {
-            State.Remove(stateKey);
-        }
+        State = State
+            .Where(stateKey => stateKey.Key.Owner.IsAlive)
+            .ToDictionary(a => a.Key, a => a.Value);
     }
 
     /// <summary>

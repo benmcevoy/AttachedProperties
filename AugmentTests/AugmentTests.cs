@@ -105,7 +105,7 @@ namespace AugmentTests
         {
             // arrange
             CanSetAndGet();
-            
+
             // internals have been made visible to us
             foreach (var x in Augment.State.Keys)
             {
@@ -115,11 +115,14 @@ namespace AugmentTests
 
             // act
             GC.Collect();
+            // when this runs is non-deterministic, so just run it for testing 
+            Augment.Compact();
 
             // assert
-            foreach (var x in Augment.State.Keys)
+            foreach (var (key, value) in Augment.State)
             {
-                Assert.IsFalse(x.Owner.IsAlive);
+                Assert.IsFalse(key.Owner.IsAlive);
+                Assert.IsNull(value);
                 break;
             }
         }
