@@ -13,6 +13,6 @@ As long as that instance is alive, being passed around your code, you can now:
 
 `var awesome = myObject._Get<string>("AwesomePropertyNameWeAgreedOnEarlier");`
 
-When the object goes out of scope and get garbage collected, so does the **Augmented* properties (or methods or whatever you attached to it).
+When the object goes out of scope and get garbage collected, so does the **Augmented** properties (or methods or whatever you attached to it).
 
 
