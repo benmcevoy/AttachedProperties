@@ -15,4 +15,5 @@ As long as that instance is alive, being passed around your code, you can now:
 
 When the object goes out of scope and get garbage collected, so does the **Augmented** properties (or methods or whatever you attached to it).
 
+Add metadata to your POCO message classes.
 
