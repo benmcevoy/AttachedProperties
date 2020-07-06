@@ -1,4 +1,4 @@
-# AttachedProperties
+# Augment: Attached Properties
 Dynamically attach object fields to managed objects
 
 You have an object come by:
