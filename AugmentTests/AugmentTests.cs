@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace AugmentTests
@@ -107,7 +108,7 @@ namespace AugmentTests
             CanSetAndGet();
 
             // internals have been made visible to us
-            foreach (var x in Augment.State.Keys)
+            foreach (var x in Augment.Instances.Keys)
             {
                 Assert.IsTrue(x.Owner.IsAlive);
                 break;
@@ -119,12 +120,82 @@ namespace AugmentTests
             Augment.Compact();
 
             // assert
-            foreach (var (key, value) in Augment.State)
+            foreach (var (key, value) in Augment.Instances)
             {
                 Assert.IsFalse(key.Owner.IsAlive);
                 Assert.IsNull(value);
                 break;
             }
+        }
+
+        [Test]
+        public void SetPrototypeAndGetInstance()
+        {
+            // arrange
+            var aCompletelyDifferentObject = new object();
+            var sut = new object();
+
+            //  act
+            aCompletelyDifferentObject._SetPrototype("MyBaseMember", "this is my value");
+
+            var result = Augment.Instance.Get<string>(sut, "MyBaseMember");
+
+            // assert
+            Assert.AreEqual("this is my value", result);
+        }
+
+        [Test]
+        public void ShadowPrototypeAndGetInstance()
+        {
+            // arrange
+            var sut = new object();
+
+            //  act
+            sut._SetPrototype("MyBaseMember", "this is my value");
+            sut._Set("MyBaseMember", "this is the new value");
+
+            var result = Augment.Instance.Get<string>(sut, "MyBaseMember");
+
+            // assert
+            Assert.AreEqual("this is the new value", result);
+        }
+
+
+        [Test]
+        public void InstanceHasPrototypeMember()
+        {
+            // arrange
+            var aCompletelyDifferentObject = new object();
+
+            aCompletelyDifferentObject._SetPrototype("MyBaseMember", "this is my value");
+
+            var sut = new object();
+
+            //  act
+            var result = sut._Has("MyBaseMember");
+            
+            // assert
+            Assert.True(result);
+        }
+
+        [Test]
+        public void EntriesContainsInstanceAndPrototypeMembers()
+        {
+            // arrange
+            var aCompletelyDifferentObject = new object();
+
+            aCompletelyDifferentObject._SetPrototype("MyBaseMember", "this is my value");
+
+            var sut = new object();
+
+            sut._Set("MyInstanceMember", 56f);
+
+            // act
+            var result = sut._Entries().ToArray();
+
+            // assert
+            Assert.Contains("MyBaseMember", result);
+            Assert.Contains("MyInstanceMember", result);
         }
     }
 }
