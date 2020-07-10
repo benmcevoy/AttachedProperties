@@ -27,3 +27,4 @@ But I want to be special, so shadow the prototype for this special instance:
 
 `myObject._Set<int>("ValuesForEveryone", 666);`
 
+But remember, prototype members aren't like that puppy you got for Christmas.  They're for life, and not garbage collected.
