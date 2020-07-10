@@ -17,3 +17,13 @@ When the object goes out of scope and get garbage collected, so does the **Augme
 
 Add metadata to your POCO message classes.
 
+## Protoypes
+
+Love that attached property? Wish everyone could enjoy it?
+
+`var awesome = myObject._SetPrototype<int>("ValuesForEveyone", 123);`
+
+But I want to be special, so shadow the prototype for this special instance:
+
+`myObject._Set<int>("ValuesForEveyone", 666);`
+
