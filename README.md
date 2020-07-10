@@ -21,9 +21,9 @@ Add metadata to your POCO message classes.
 
 Love that attached property? Wish everyone could enjoy it?
 
-`var awesome = myObject._SetPrototype<int>("ValuesForEveyone", 123);`
+`var awesome = myObject._SetPrototype<int>("ValuesForEveryone", 123);`
 
 But I want to be special, so shadow the prototype for this special instance:
 
-`myObject._Set<int>("ValuesForEveyone", 666);`
+`myObject._Set<int>("ValuesForEveryone", 666);`
 
